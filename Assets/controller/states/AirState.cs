@@ -35,7 +35,6 @@ public class AirState : State
 
         _jump = stateMachine.GetComponent<Jump>();
         _airjump = stateMachine.GetComponent<AirJump>();
-        _airjump.disableOverride = false;
 
         #region change motor vals
         _motor.speed = _stats.airSpeed;
@@ -51,6 +50,9 @@ public class AirState : State
 
     public override void Tick()
     {
+        if (_jump.disableOverride)
+            _airjump.disableOverride = false;
+
         if (_crouch.crouching || _crouch.crouched)
             stateMachine.SetState(new AirCrouchState(stateMachine));
 
